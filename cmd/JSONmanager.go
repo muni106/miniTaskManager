@@ -16,8 +16,10 @@ type Task struct {
 	Made bool   `json:"made"`
 }
 
+const filename = "tasks.json"
+
 func tasksNames() {
-	jsonFile, err := os.Open("tasks.json")
+	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -39,24 +41,33 @@ func tasksNames() {
 	}
 }
 
-func checkFile() {
-	jsonFile, err := os.Create("/tasks.json")
-
+func addATask(taskName string) {
+	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
 	}
 
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
 	byteValue, err := io.ReadAll(jsonFile)
 
 	var tasks Tasks
-
 	err = json.Unmarshal(byteValue, &tasks)
 
-	//close file
-	defer func(jsonFile *os.File) {
-		err := jsonFile.Close()
-		if err != nil {
+	task := Task{Task: taskName, Made: false}
 
-		}
-	}(jsonFile)
+	tasks.Tasks = append(tasks.Tasks, task)
+
+	marshall, err := json.Marshal(tasks)
+	if err != nil {
+		fmt.Println("Error during Marshaling: ", err)
+		return
+	}
+
+	err = os.WriteFile(filename, marshall, 0644)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+		return
+	}
 }

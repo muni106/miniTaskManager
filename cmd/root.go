@@ -7,17 +7,17 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "basic",
-	Short: "Hugo is a very fast static site generator",
-	Long: `A Fast and Flexible Static Site Generator built with
-                love by spf13 and friends in Go.
-                Complete documentation is available at http://hugo.spf13.com`,
+	Use:   "mitama",
+	Short: "mitama is a MIni TAsk MAnager",
+	Long: ` Task Manager which can add a task
+				complete it, list all tasks and remove tasks`,
 }
 
 func init() {
 	greetCmd.Flags().StringP("name", "n", "", "Name of the person to greet")
 	greetCmd.Flags().StringP("message", "m", "Hello", "Custom message to include in the greeting")
 	rootCmd.AddCommand(greetCmd)
+	rootCmd.AddCommand(addTask)
 }
 
 func Execute() {
