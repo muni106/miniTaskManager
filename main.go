@@ -1,8 +1,6 @@
 package main
 
-import (
-	"miniTaskManager/cmd"
-)
+import "miniTaskManager/cmd"
 
 func main() {
 	cmd.Execute()

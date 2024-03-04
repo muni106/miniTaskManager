@@ -1,4 +1,6 @@
 .idea
+miniTaskManager
+.vscode
 # Logs
 logs
 *.log
