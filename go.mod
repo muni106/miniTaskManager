@@ -1,4 +1,4 @@
-module miniTaskManager
+module mitama
 
 go 1.22.0
 

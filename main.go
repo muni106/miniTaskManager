@@ -1,6 +1,6 @@
 package main
 
-import "miniTaskManager/cmd"
+import "mitama/cmd"
 
 func main() {
 	cmd.Execute()
