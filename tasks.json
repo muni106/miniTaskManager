@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "task": "do doooooo",
+      "made": true
+    },
+    {
+      "task": "saluta ettore",
+      "made": false
+    },
+    {
+      "task": "saluto al popolo",
+      "made": true
+    }
+  ]
+}

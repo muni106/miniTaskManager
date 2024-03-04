@@ -12,12 +12,31 @@ type Tasks struct {
 }
 
 type Task struct {
-	taskName string `json:"task_name"`
-	isMade   bool   `json:"made"`
+	Task string `json:"task"`
+	Made bool   `json:"made"`
 }
 
-func writeTask() {
+func tasksNames() {
+	jsonFile, err := os.Open("tasks.json")
+	if err != nil {
+		fmt.Println(err)
+	}
 
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	byteValue, err := io.ReadAll(jsonFile)
+
+	var tasks Tasks
+
+	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for i := 0; i < len(tasks.Tasks); i++ {
+		fmt.Println("ciao "+tasks.Tasks[i].Task, i)
+	}
 }
 
 func checkFile() {

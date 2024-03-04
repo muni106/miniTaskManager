@@ -20,6 +20,7 @@ var greetCmd = &cobra.Command{
 			return err
 		}
 		fmt.Printf("Hello, %s! %s\n", name, message)
+		tasksNames()
 		return nil
 	},
 }
