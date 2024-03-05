@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +21,7 @@ var greetCmd = &cobra.Command{
 			return err
 		}
 		fmt.Printf("Hello, %s! %s\n", name, message)
-		tasksNames()
+		taskNames()
 		return nil
 	},
 }

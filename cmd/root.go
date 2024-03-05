@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
@@ -18,6 +19,8 @@ func init() {
 	greetCmd.Flags().StringP("message", "m", "Hello", "Custom message to include in the greeting")
 	rootCmd.AddCommand(greetCmd)
 	rootCmd.AddCommand(addTask)
+	listTasks.Flags().BoolP("all", "a", false, "see all tasks comleted and uncompleted")
+	rootCmd.AddCommand(listTasks)
 }
 
 func Execute() {

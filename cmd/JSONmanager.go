@@ -18,7 +18,32 @@ type Task struct {
 
 const filename = "tasks.json"
 
-func tasksNames() {
+func taskNames() {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	byteValue, err := io.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(filename + " read went wrong")
+	}
+	var tasks Tasks
+
+	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for i := 0; i < len(tasks.Tasks); i++ {
+		fmt.Println(i, ". ", tasks.Tasks[i].Task)
+	}
+}
+
+func tasksTodo() {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
@@ -29,6 +54,11 @@ func tasksNames() {
 
 	byteValue, err := io.ReadAll(jsonFile)
 
+	if err != nil {
+		fmt.Println("Error in file reading: ", err)
+		return
+	}
+
 	var tasks Tasks
 
 	err = json.Unmarshal(byteValue, &tasks)
@@ -37,7 +67,9 @@ func tasksNames() {
 	}
 
 	for i := 0; i < len(tasks.Tasks); i++ {
-		fmt.Println("ciao "+tasks.Tasks[i].Task, i)
+		if !tasks.Tasks[i].Made {
+			fmt.Println("- ", tasks.Tasks[i].Task)
+		}
 	}
 }
 
@@ -51,9 +83,15 @@ func addATask(taskName string) {
 	defer jsonFile.Close()
 
 	byteValue, err := io.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(filename + " read went wrong")
+	}
 
 	var tasks Tasks
 	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println("unmarshall went wrong", err)
+	}
 
 	task := Task{Task: taskName, Made: false}
 
@@ -70,4 +108,5 @@ func addATask(taskName string) {
 		fmt.Println("Error writing to file:", err)
 		return
 	}
+	fmt.Println("'" + taskName + "' task has been successfully added")
 }
