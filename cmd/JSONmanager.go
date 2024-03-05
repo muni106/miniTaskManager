@@ -110,3 +110,28 @@ func addATask(taskName string) {
 	}
 	fmt.Println("'" + taskName + "' task has been successfully added")
 }
+
+func setTaskComplete(i int) {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	byteValue, err := io.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(filename + " read went wrong")
+	}
+	var tasks Tasks
+
+	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for i := 0; i < len(tasks.Tasks); i++ {
+		fmt.Println(i, ". ", tasks.Tasks[i].Task)
+	}	
+}

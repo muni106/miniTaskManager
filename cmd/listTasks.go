@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var listTasks = &cobra.Command{
+var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list the tasks",
 	Long:  "this command is usefull to list the tasks",
