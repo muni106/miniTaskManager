@@ -22,6 +22,7 @@ func init() {
 	listCmd.Flags().BoolP("all", "a", false, "see all tasks comleted and uncompleted")
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(completeCmd)
+	removeCmd.Flags().BoolP("all", "a", false, "remove all tasks")
 	rootCmd.AddCommand(removeCmd)
 }
 

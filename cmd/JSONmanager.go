@@ -219,3 +219,57 @@ func removeTaskByIndex(i int) {
 	}
 
 }
+
+func removeTaskByName(taskName string) {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	byteValue, err := io.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(filename + " read went wrong")
+	}
+	var tasks Tasks
+
+	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for i := 0; i < len(tasks.Tasks); i++ {
+		if taskName == tasks.Tasks[i].Task {
+			removeTaskByIndex(i)
+			return
+		}
+	}
+
+	fmt.Println("task to remove not found")
+
+}
+
+func removeAllTasks() {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	var tasks Tasks
+
+	marshall, err := json.Marshal(tasks)
+	if err != nil {
+		fmt.Println("fail on marshaling: ", err)
+	}
+
+	err = os.WriteFile(filename, marshall, 0644)
+	if err != nil {
+		fmt.Println("error on file writing")
+	}
+
+}
