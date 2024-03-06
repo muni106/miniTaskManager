@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-var addTask = &cobra.Command{
+var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "add a new task",
 	Long:  "add a new task to all your tasks, then 'list' them too see em all",

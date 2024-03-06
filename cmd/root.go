@@ -18,10 +18,11 @@ func init() {
 	greetCmd.Flags().StringP("name", "n", "", "Name of the person to greet")
 	greetCmd.Flags().StringP("message", "m", "Hello", "Custom message to include in the greeting")
 	rootCmd.AddCommand(greetCmd)
-	rootCmd.AddCommand(addTask)
+	rootCmd.AddCommand(addCmd)
 	listCmd.Flags().BoolP("all", "a", false, "see all tasks comleted and uncompleted")
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(completeCmd)
+	rootCmd.AddCommand(removeCmd)
 }
 
 func Execute() {
