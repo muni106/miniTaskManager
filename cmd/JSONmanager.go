@@ -111,7 +111,43 @@ func addATask(taskName string) {
 	fmt.Println("'" + taskName + "' task has been successfully added")
 }
 
-func setTaskComplete(i int) {
+func setTaskCompleteByIndex(i int) {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Successfully opened tasks.json")
+	defer jsonFile.Close()
+
+	byteValue, err := io.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(filename + " read went wrong")
+	}
+	var tasks Tasks
+
+	err = json.Unmarshal(byteValue, &tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	tasks.Tasks[i].Made = true
+
+	marshall, err := json.Marshal(tasks)
+	if err != nil {
+		fmt.Println("fail on marshaling: ", err)
+	}
+
+	err = os.WriteFile(filename, marshall, 0644)
+	if err != nil {
+		fmt.Println("error on file writing")
+	}
+
+	fmt.Println("task : '", tasks.Tasks[i].Task, "' completed")
+
+}
+
+func setTaskCompleteByName(taskName string) {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
@@ -132,6 +168,21 @@ func setTaskComplete(i int) {
 	}
 
 	for i := 0; i < len(tasks.Tasks); i++ {
-		fmt.Println(i, ". ", tasks.Tasks[i].Task)
-	}	
+		if tasks.Tasks[i].Task == taskName {
+			tasks.Tasks[i].Made = true
+			fmt.Println("task : '", tasks.Tasks[i].Task, "' completed")
+			marshall, err := json.Marshal(tasks)
+			if err != nil {
+				fmt.Println("fail on marshaling: ", err)
+			}
+
+			err = os.WriteFile(filename, marshall, 0644)
+			if err != nil {
+				fmt.Println("error on file writing")
+			}
+			return
+		}
+	}
+	fmt.Println("task not found")
 }
+
